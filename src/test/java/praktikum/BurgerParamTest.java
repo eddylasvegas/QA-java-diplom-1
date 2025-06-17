@@ -1,22 +1,28 @@
 package praktikum;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import java.util.Arrays;
 import java.util.Collection;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
 import static praktikum.TestConstants.*;
 
 @RunWith(Parameterized.class)
 public class BurgerParamTest {
 
     private Burger burger;
+
+    @Mock
     private Bun bun;
+
+    @Mock
     private Ingredient ingredient;
 
     private final IngredientType type;
@@ -42,9 +48,16 @@ public class BurgerParamTest {
 
     @Before
     public void setUp() {
+        MockitoAnnotations.openMocks(this);
         burger = new Burger();
-        bun = new Bun(BLACK_BUN_NAME, BUN_PRICE);
-        ingredient = new Ingredient(type, name, price);
+
+        when(bun.getName()).thenReturn(BLACK_BUN_NAME);
+        when(bun.getPrice()).thenReturn(BUN_PRICE);
+
+        when(ingredient.getType()).thenReturn(type);
+        when(ingredient.getName()).thenReturn(name);
+        when(ingredient.getPrice()).thenReturn(price);
+
         burger.setBuns(bun);
     }
 
